@@ -1,0 +1,35 @@
+name: Run Automation Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: ⬇️ Checkout code
+      uses: actions/checkout@v3
+
+    - name: ☕ Setup Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '19' # Use the version your tests require
+        distribution: 'temurin'
+
+    - name: 📦 Set up Maven
+      uses: stCarolas/setup-maven@v4.5
+      with:
+        maven-version: '3.8.6'
+
+    - name: 🧪 Run Tests
+      run: mvn clean test
+
+    - name: 📤 Upload Extent/Allure Reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: Test-Reports
+        path: test-output/ # Update if you're using Allure or different output folder

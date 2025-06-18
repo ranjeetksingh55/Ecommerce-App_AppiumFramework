@@ -17,7 +17,7 @@ jobs:
       - name: ☕ Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '19'
+          java-version: '19' # Update to match your project
           distribution: 'temurin'
 
       - name: 📦 Set up Maven
@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Test-Reports
-          path: test-output/  # or target/surefire-reports or allure-results, depending on your setup
+          path: test-output/ # Or target/surefire-reports or allure-results depending on what you're using
