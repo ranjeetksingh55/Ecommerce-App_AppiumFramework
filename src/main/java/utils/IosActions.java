@@ -13,7 +13,6 @@ public class IosActions extends AppiumUtils {
     IOSDriver driver;
 
     public IosActions(IOSDriver driver) {
-        super(driver);
         this.driver = driver;
     }
 

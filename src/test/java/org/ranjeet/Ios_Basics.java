@@ -5,6 +5,7 @@
 package org.ranjeet;
 
 import org.ranjeet.PageObjects.ios.AlertViews;
+import org.ranjeet.TestUtils.Ios_BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

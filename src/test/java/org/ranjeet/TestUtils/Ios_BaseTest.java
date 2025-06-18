@@ -1,42 +1,41 @@
-package org.ranjeet;
+package org.ranjeet.TestUtils;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.ranjeet.PageObjects.ios.HomePage;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import utils.AppiumUtils;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.Properties;
 
-public class Ios_BaseTest {
+public class Ios_BaseTest extends AppiumUtils {
 	public IOSDriver driver;
 	public AppiumDriverLocalService service;
 	public HomePage homePage;
 
 	@BeforeClass
-	public void ConfigureAppium() throws MalformedURLException {
-		service = new AppiumServiceBuilder()
-				.withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
-				.withIPAddress("127.0.0.1")
-				.usingPort(4723)
-				.build();
+	public void ConfigureAppium() throws IOException {
+		Properties prop = new Properties();
 
-		// Start the Appium server
-		service.start();
+		FileInputStream fis = new FileInputStream(System.getProperty("user.dir")+"//src//main//java//org//ranjeet//PageObjects//Resources//data.properties");
+		prop.load(fis);
+		String ipAddress = prop.getProperty("ipAddress");
+		String port = prop.getProperty("port");
+		service = startAppiumServer(ipAddress,Integer.parseInt(port));
 
 		XCUITestOptions options = new XCUITestOptions();
-		options.setDeviceName("iPhone 15 Pro");
+		options.setDeviceName(prop.getProperty("IosDeviceName"));
 		options.setApp("/Users/91sqft/Desktop/Testapp3/UIKitCatalog.app");
-		options.setPlatformVersion("17.5");
+		options.setPlatformVersion(prop.getProperty("PlatformVersion"));
 		options.setWdaLaunchTimeout(Duration.ofSeconds(20));
 
 		// Initialize the iOS driver
-		driver = new IOSDriver(new URL("http://127.0.0.1:4723"), options);
+		driver = new IOSDriver(service.getUrl(), options);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		homePage=new HomePage(driver);
 	}

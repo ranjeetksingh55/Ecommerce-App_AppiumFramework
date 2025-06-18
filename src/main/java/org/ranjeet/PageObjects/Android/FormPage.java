@@ -1,9 +1,11 @@
 package org.ranjeet.PageObjects.Android;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import utils.AndroidActions;
@@ -55,7 +57,12 @@ public class FormPage extends AndroidActions {
         driver.findElement(By.xpath("//android.widget.TextView[@resource-id=\"android:id/text1\" and @text=\"" + countryName + "\"]")).click();
 
     }
-
+ public void setActivity() {
+    // Start the main activity via the app's launcher activity
+    ((JavascriptExecutor) driver).executeScript("mobile: startActivity", ImmutableMap.of(
+            "appPackage", "com.androidsample.generalstore",
+            "appActivity", "com.androidsample.generalstore.MainActivity"));
+}
     public ProductCatalogue submitForm() {
         shopButton.click();
         return new ProductCatalogue(driver);

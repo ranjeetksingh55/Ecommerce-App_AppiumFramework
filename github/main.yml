@@ -17,7 +17,7 @@ jobs:
       - name: ☕ Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '19' # Use the version your tests require
+          java-version: '19' # Update to match your project
           distribution: 'temurin'
 
       - name: 📦 Set up Maven
@@ -28,8 +28,8 @@ jobs:
       - name: 🧪 Run Tests
         run: mvn clean test
 
-      - name: 📤 Upload Extent/Allure Reports
-                 - uses: actions/upload-artifact@v4
-                 - with:
-                 - name: Test-Reports
-                 - path: test-output/
+      - name: 📤 Upload Test Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: Test-Reports
+          path: test-output/ # Or target/surefire-reports or allure-results depending on what you're using
