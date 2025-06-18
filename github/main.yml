@@ -17,7 +17,7 @@ jobs:
       - name: ☕ Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '19' # Use the version your tests require
+          java-version: '19'
           distribution: 'temurin'
 
       - name: 📦 Set up Maven
@@ -29,7 +29,7 @@ jobs:
         run: mvn clean test
 
       - name: 📤 Upload Extent/Allure Reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Test-Reports
-          path: test-output/ # Update if you're using Allure or different output folder
+          path: test-output/
